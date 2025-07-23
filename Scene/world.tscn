@@ -1,9 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://dpipe3euckdjt"]
+[gd_scene load_steps=3 format=3 uid="uid://dpipe3euckdjt"]
 
 [ext_resource type="PackedScene" uid="uid://bqfxypv50uesx" path="res://Scene/nave.tscn" id="1_emx41"]
+[ext_resource type="PackedScene" uid="uid://cch6gxyq6r7pq" path="res://Scene/enemy.tscn" id="2_dlwip"]
 
 [node name="World" type="Node2D"]
 
 [node name="Nave" parent="." instance=ExtResource("1_emx41")]
 position = Vector2(357, 227)
 speed = 500.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(432, 256)
+zoom = Vector2(5, 5)
+
+[node name="Enemy" parent="." instance=ExtResource("2_dlwip")]
+position = Vector2(448, 229)
+amount_bullet = 20

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cch6gxyq6r7pq"]
+
+[ext_resource type="Script" uid="uid://bf23c00u6q5nm" path="res://Script/bullet_controller.gd" id="1_4jekx"]
+[ext_resource type="Texture2D" uid="uid://8jsgti2lm3t7" path="res://Assets/Nebula Shot Levels - Sprite Sheet 32x32.png" id="1_yww8s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jekx"]
+atlas = ExtResource("1_yww8s")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s685e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4jekx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_4jekx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = 3.14159
+sprite_frames = SubResource("SpriteFrames_s685e")
