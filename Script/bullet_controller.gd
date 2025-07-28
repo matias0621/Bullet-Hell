@@ -9,7 +9,24 @@ var time = 0.0
 
 
 func _process(delta: float) -> void:
-	spiral_pattern(delta)
+	circle_pattern(delta)
+
+func circle_pattern(delta:float) -> void:
+	time += delta
+	if time > time_wait:
+		var list_bullet:Array[Bullet] = []
+		for i in range(0, amount_bullet):
+			var bullet:Bullet = BULLET.instantiate()
+			bullet.position = self.position
+			bullet.advance = false
+			rotate += get_rotation_for_bullet()
+			bullet.set_rotation_bullet(rotate)
+			list_bullet.append(bullet)
+		
+		for i in range(0, list_bullet.size()):
+			list_bullet[i].advance = true
+			get_tree().root.add_child(list_bullet[i])
+		time = 0
 
 func spiral_pattern(delta:float) -> void:
 	time += delta
