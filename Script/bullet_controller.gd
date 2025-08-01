@@ -1,20 +1,46 @@
 extends Node
 
 var attack = true
-@export var amount_bullet:int = 10
+var amount_bullet:int = 3
 var rotate = 0
 const BULLET = preload("res://Scene/bullet.tscn")
 var time = 0.0
-@export var time_wait = 0.1
+@export var time_wait = 2
 @export var test = 0
 
 
 func _process(delta: float) -> void:
-	if test == 0:
-		double_spiral_pattern(delta)
-	elif test == 1:
-		spiral_pattern(delta)
+	time += delta
+	if time >= time_wait:
+		line_parttern()
+		time = 0
 
+func line_parttern()-> void:
+	var list_bullet:Array[Bullet] = []
+	for i in range(0, amount_bullet):
+		print(i)
+		var bullet:Bullet = BULLET.instantiate()
+		bullet.advance = false
+		bullet.set_rotation_bullet(rotate)
+		bullet.position = self.position
+		get_tree().root.add_child(bullet)
+		list_bullet.append(bullet)
+		rotate += get_rotation_for_bullet()
+		if rotate > 180 and amount_bullet != 1: rotate *= -1
+	
+	await get_tree().create_timer(0.1).timeout
+	
+	for i in range(0, list_bullet.size()):
+		list_bullet[i].advance = true
+	reset_rotate_variable()
+
+func get_rotation_for_bullet() -> float:
+	return 360 / amount_bullet
+
+func reset_rotate_variable(rote:float = 0) -> void:
+	rotate = rote
+	
+#region
 func circle_pattern(delta:float) -> void:
 	time += delta
 	if time > time_wait:
@@ -36,7 +62,7 @@ func spiral_pattern(delta:float) -> void:
 	time += delta
 	if time > time_wait:
 		rotate += get_rotation_for_bullet()
-		create_bullet()
+		get_tree().root.add_child(create_bullet()) 
 		time = 0.0
 
 func double_spiral_pattern(delta:float) -> void:
@@ -45,17 +71,21 @@ func double_spiral_pattern(delta:float) -> void:
 	if time > time_wait:
 		rotate += get_rotation_for_bullet()
 		save_rotation = rotate
-		create_bullet()
+		var bullet1:Bullet = create_bullet()
+		bullet1.advance = false
 		rotate = 180 + save_rotation
-		create_bullet()
+		var bullet2:Bullet = create_bullet()
+		bullet2.advance = false
 		rotate = save_rotation - 180
 		time = 0
+		bullet1.advance = true
+		bullet2.advance = true
+		get_tree().root.add_child(bullet1)
+		get_tree().root.add_child(bullet2)
 
-func create_bullet() -> void:
+func create_bullet() -> Bullet:
 	var bullet: Bullet = BULLET.instantiate()
 	bullet.position = self.position
 	bullet.set_rotation_bullet(rotate)
-	get_tree().root.add_child(bullet)
-
-func get_rotation_for_bullet() -> float:
-	return 360 / amount_bullet
+	return bullet
+#endregion

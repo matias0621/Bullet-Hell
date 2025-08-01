@@ -15,4 +15,3 @@ zoom = Vector2(5, 5)
 
 [node name="Enemy" parent="." instance=ExtResource("2_dlwip")]
 position = Vector2(448, 229)
-amount_bullet = 20
