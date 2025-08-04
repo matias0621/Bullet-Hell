@@ -12,8 +12,24 @@ var time = 0.0
 func _process(delta: float) -> void:
 	time += delta
 	if time >= time_wait:
-		line_parttern()
+		diagonal_parttern()
 		time = 0
+
+func diagonal_parttern()-> void:
+	var list_bullet:Array[Bullet] = []
+	for i in range(0, amount_bullet):
+		var bullet:Bullet = BULLET.instantiate()
+		bullet.advance = false
+		bullet.set_rotation_bullet(rotate)
+		bullet.position = self.position
+		bullet.increment_rotation = 0.5
+		get_tree().root.add_child(bullet)
+		list_bullet.append(bullet)
+		rotate += get_rotation_for_bullet()
+		if rotate > 180 and amount_bullet != 1: rotate *= -1
+	
+	for i in range(0, list_bullet.size()):
+		list_bullet[i].advance = true
 
 func line_parttern()-> void:
 	var list_bullet:Array[Bullet] = []
@@ -27,8 +43,6 @@ func line_parttern()-> void:
 		list_bullet.append(bullet)
 		rotate += get_rotation_for_bullet()
 		if rotate > 180 and amount_bullet != 1: rotate *= -1
-	
-	await get_tree().create_timer(0.1).timeout
 	
 	for i in range(0, list_bullet.size()):
 		list_bullet[i].advance = true
