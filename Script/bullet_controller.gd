@@ -16,14 +16,14 @@ func _process(delta: float) -> void:
 		time = 0
 
 func get_rotation_with_radians() -> float:
-	return PI * 2 / amount_bullet
+	return TAU / amount_bullet
 
 func test_with_radians() -> void:
 	var list_bullet:Array[Bullet] = []
 	for i in range(0, amount_bullet):
 		var bullet:Bullet = BULLET.instantiate()
 		bullet.advance = false
-		bullet.set_rotation_bullet(rotate)
+		bullet.rotation = get_rotation_with_radians() * i
 		bullet.position = self.position
 		bullet.increment_rotation = 0.5
 		get_tree().root.add_child(bullet)

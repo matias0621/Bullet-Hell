@@ -10,5 +10,6 @@ func set_rotation_bullet(new_rotation:float):
 
 func _process(delta: float) -> void:
 	if advance:
-		position += transform.x * speed * delta
+		#position += transform.x * speed * delta
+		position += Vector2.RIGHT.rotated(rotation) * speed * delta
 		rotation_degrees += increment_rotation
