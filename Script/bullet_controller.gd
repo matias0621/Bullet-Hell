@@ -12,7 +12,7 @@ var time = 0.0
 func _process(delta: float) -> void:
 	time += delta
 	if time >= time_wait:
-		test_with_radians()
+		diagonal_parttern()
 		time = 0
 
 func get_rotation_with_radians() -> float:
@@ -44,8 +44,8 @@ func diagonal_parttern()-> void:
 		bullet.increment_rotation = 0.5
 		get_tree().root.add_child(bullet)
 		list_bullet.append(bullet)
-		rotate += get_rotation_for_bullet()
-		if rotate > 180 and amount_bullet != 1: rotate *= -1
+		rotate = get_rotation_with_radians() * i
+		#if rotate > 180 and amount_bullet != 1: rotate *= -1
 	
 	for i in range(0, list_bullet.size()):
 		list_bullet[i].advance = true
@@ -60,8 +60,8 @@ func line_parttern()-> void:
 		bullet.position = self.position
 		get_tree().root.add_child(bullet)
 		list_bullet.append(bullet)
-		rotate += get_rotation_for_bullet()
-		if rotate > 180 and amount_bullet != 1: rotate *= -1
+		rotate += get_rotation_with_radians()
+		#if rotate > 180 and amount_bullet != 1: rotate *= -1
 	
 	for i in range(0, list_bullet.size()):
 		list_bullet[i].advance = true
